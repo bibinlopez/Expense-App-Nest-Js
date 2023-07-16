@@ -1,7 +1,7 @@
 
 export enum ReportType {
    INCOME = "income",
-   EXPENCE = "expense"
+   EXPENSE = "expense"
 }
 
 
@@ -29,7 +29,7 @@ export const data: Data = {
          amount: 1200,
          created_at: new Date(),
          updated_at: new Date(),
-         type: ReportType.EXPENCE
+         type: ReportType.EXPENSE
       }
    ]
 }
