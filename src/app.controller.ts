@@ -35,9 +35,26 @@ export class AppController {
   }
 
   @Put(':id')
-  updateIncomeReport() {
-    return { success: true, msg: 'updated' }
+  updateIncomeReport(
+    @Param('type') type: string,
+    @Param('id') id: string,
+    @Body() body: { amount: number, source: string }
+  ) {
+    const reportType = type === "income" ? ReportType.INCOME : ReportType.EXPENSE
+    const reportToUpdate = data.report.filter((report) => {
+      return report.type === reportType
+    }).find(report => report.id === id)
+    if (!reportToUpdate) return;
+    const reportIndex = data.report.findIndex((report) => report.id === reportToUpdate.id)
+
+    data.report[reportIndex] = {
+      ...data.report[reportIndex],
+      ...body
+    }
+    return { success: true, msg: 'updated', data: data.report[reportIndex] }
   }
+
+
 
   @Delete(':id')
   deleteIncomeReport() {
