@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Put, Delete, Param, Body, HttpCode } from "@nestjs/common"
+import {
+  Controller,
+  Get,
+  Post,
+  Put,
+  Delete,
+  Param,
+  Body,
+  HttpCode,
+  ParseUUIDPipe
+} from "@nestjs/common"
 import { v4 as uuid } from "uuid"
 import { ReportType } from 'src/data';
 import { AppService } from "./app.service";
@@ -17,7 +27,9 @@ export class AppController {
   }
 
   @Get(':id')
-  getReportById(@Param('type') type: string, @Param('id') id: string) {
+  getReportById(@Param('type') type: string, @Param('id', ParseUUIDPipe) id: string) {
+    console.log(id, typeof id);
+
     const reportType = type === "income" ? ReportType.INCOME : ReportType.EXPENSE
     return this.appService.getReportById(reportType, id);
   }
