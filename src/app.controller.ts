@@ -10,9 +10,9 @@ import {
   ParseUUIDPipe,
   ParseEnumPipe
 } from "@nestjs/common"
-import { v4 as uuid } from "uuid"
 import { ReportType } from 'src/data';
 import { AppService } from "./app.service";
+import { CreateReportDto } from "./dto/report.dto"
 
 @Controller('report/:type')
 export class AppController {
@@ -38,7 +38,7 @@ export class AppController {
 
   @Post()
   createReport(
-    @Body() { amount, source }: { amount: number, source: string },
+    @Body() { amount, source }: CreateReportDto,
     @Param('type', new ParseEnumPipe(ReportType)) type: string
   ) {
     const reportType = type === "income" ? ReportType.INCOME : ReportType.EXPENSE
