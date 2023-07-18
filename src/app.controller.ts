@@ -51,7 +51,10 @@ export class AppController {
     @Param('id') id: string,
     @Body() body: UpdateReportDto
   ) {
-    const reportType = type === "income" ? ReportType.INCOME : ReportType.EXPENSE
+    console.log(body);
+
+    const reportType =
+      type === "income" ? ReportType.INCOME : ReportType.EXPENSE
     return this.appService.updateReport(reportType, id, body)
   }
 
