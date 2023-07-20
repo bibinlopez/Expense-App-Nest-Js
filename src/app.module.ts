@@ -3,6 +3,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 
+import { CustomInterceptor } from './custom.interceptor'
+
 @Module({
   imports: [],
   controllers: [AppController],
@@ -10,7 +12,8 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
     AppService,
     {
       provide: APP_INTERCEPTOR,
-      useClass: ClassSerializerInterceptor
+      // useClass: ClassSerializerInterceptor
+      useClass: CustomInterceptor
     }
   ],
 })
