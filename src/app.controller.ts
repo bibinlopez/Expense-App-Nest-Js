@@ -32,8 +32,8 @@ export class AppController {
     @Param('type', new ParseEnumPipe(ReportType)) type: string,
     @Param('id', ParseUUIDPipe) id: string
   ): ReportResponseDto {
-
-    const reportType = type === "income" ? ReportType.INCOME : ReportType.EXPENSE
+    const reportType =
+      type === "income" ? ReportType.INCOME : ReportType.EXPENSE
     return this.appService.getReportById(reportType, id);
   }
 

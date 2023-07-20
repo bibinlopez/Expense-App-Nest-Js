@@ -26,15 +26,21 @@ interface UpdateReport {
 @Injectable()
 export class AppService {
   getAllReports(type: ReportType): ReportResponseDto[] {
-    const result = data.report.filter((report) => report.type === type);
+    // const result = data.report.filter((report) => report.type === type);
+    const result = data.report
+      .filter((report) => report.type === type)
+      .map(report => new ReportResponseDto(report))
+
     return result
   }
 
   getReportById(type: ReportType, id: string): ReportResponseDto {
-    const result = data.report.filter((report) => {
-      return report.type === type
-    }).find(report => report.id === id)
-    return result;
+    const result = data.report.
+      filter((report) => report.type === type).
+      find(report => report.id === id)
+
+    if (!result) return;
+    return new ReportResponseDto(result);
   }
 
   createReport(type: ReportType, { amount, source }: Report): ReportResponseDto {
@@ -47,7 +53,7 @@ export class AppService {
       type,
     }
     data.report.push(newReport)
-    return newReport
+    return new ReportResponseDto(newReport)
   }
 
   updateReport(type: ReportType, id: string, body: UpdateReport): ReportResponseDto {
@@ -62,7 +68,7 @@ export class AppService {
       ...body,
       updated_at: new Date()
     }
-    return data.report[reportIndex]
+    return new ReportResponseDto(data.report[reportIndex])
   }
 
   deleteReport(id: string) {
